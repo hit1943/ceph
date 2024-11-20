@@ -162,6 +162,8 @@ struct frag_info_t : public scatter_info_t {
       mtime = cur.mtime;
       if (touched_mtime)
 	*touched_mtime = true;
+      if (touched_chattr)
+        *touched_chattr = true;
     }
     if (cur.change_attr > change_attr) {
       change_attr = cur.change_attr;
