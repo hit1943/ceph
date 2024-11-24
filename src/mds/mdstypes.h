@@ -177,8 +177,8 @@ struct frag_info_t : public scatter_info_t {
   void add(const frag_info_t& other) {
     if (other.mtime > mtime)
       mtime = other.mtime;
-    if (other.change_attr > change_attr)
-      change_attr = other.change_attr;
+    
+    change_attr += other.change_attr;
     nfiles += other.nfiles;
     nsubdirs += other.nsubdirs;
   }
