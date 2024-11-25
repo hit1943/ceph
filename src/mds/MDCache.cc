@@ -2189,7 +2189,7 @@ void MDCache::predirty_journal_parents(MutationRef mut, EMetaBlob *blob,
         //pf->fragstat.change_attr = (pf->fragstat.change_attr >= dirstat_change_attr) ? pf->fragstat.change_attr + 1 : dirstat_change_attr + 1;
         pf->fragstat.change_attr++;
 
-        dout(10) << "predirty_journal_parents bumping fragstat change_attr to " << pf->fragstat.change_attr << " on " << parent << dendl;
+        dout(1) << "predirty_journal_parents bumping fragstat change_attr to " << pf->fragstat.change_attr << " on " << parent << dendl;
 	if (pf->fragstat.mtime > pf->rstat.rctime) {
 	  dout(10) << "predirty_journal_parents updating mtime on " << *parent << dendl;
 	  pf->rstat.rctime = pf->fragstat.mtime;
@@ -2319,7 +2319,7 @@ void MDCache::predirty_journal_parents(MutationRef mut, EMetaBlob *blob,
       //if (touched_chattr)
       pi.inode->change_attr++;
       
-      dout(20) << "predirty_journal_parents     gives " << pi.inode->dirstat << " on " << *pin << dendl;
+      dout(1) << "predirty_journal_parents     gives " << pi.inode->dirstat << " on " << *pin << dendl;
 
       if (parent->get_frag() == frag_t()) { // i.e., we are the only frag
 	if (pi.inode->dirstat.size() < 0)

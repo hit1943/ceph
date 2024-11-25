@@ -2538,16 +2538,16 @@ void CInode::finish_scatter_gather_update(int type, MutationRef& mut)
       //if (touched_chattr)
       //  pi->change_attr++;
       if (pi->change_attr < dirstat.change_attr) {
-        dout(2) << "  change_attr " << pi->change_attr << " -> " << dirstat.change_attr << dendl;
+        dout(1) << "1  change_attr " << pi->change_attr << " -> " << dirstat.change_attr << dendl;
         pi->change_attr = pi->dirstat.change_attr = dirstat.change_attr;
       }
 
       if (pi->dirstat.change_attr < pi->change_attr) {
-        dout(2) << "  change_attr " << pi->change_attr << " -> " << pi->dirstat.change_attr << dendl;
+        dout(1) << "2  change_attr " << pi->change_attr << " -> " << pi->dirstat.change_attr << dendl;
         pi->dirstat.change_attr = pi->change_attr;
       }
 
-      dout(20) << " final dirstat " << pi->dirstat << dendl;
+      dout(1) << " final dirstat " << pi->dirstat << " pi->change_attr " << pi->change_attr << dendl;
 
       if (dirstat_valid && !dirstat.same_sums(pi->dirstat)) {
         frag_vec_t leaves;
