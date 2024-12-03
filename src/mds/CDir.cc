@@ -3473,6 +3473,8 @@ void CDir::dump(Formatter *f, int flags) const
   }
   if (flags & DUMP_DIRFRAG) {
     f->dump_stream("dirfrag") << dirfrag();
+
+    f->dump_stream("fnode") << get_fnode();
   }
   if (flags & DUMP_SNAPID_FIRST) {
     f->dump_int("snapid_first", first);
