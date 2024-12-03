@@ -80,9 +80,25 @@ static inline __u32 ceph_frag_right_child(__u32 f)
 	return ceph_frag_make(ceph_frag_bits(f)+1,
 	      ceph_frag_value(f) | (0x1000000 >> (1+ceph_frag_bits(f))));
 }
+/*
+f: _encoded frag, 高8位 + 低24位，高8位表示低24上实际使用的位数
+by: 增加位数
+i: 第几个子节点
+返回值：子节点的编码值
+举例：
+f: 0x1000000
+by: 1
+i: 0，返回值：0x1000000
+i: 1，返回值：0x1100000
+*/
 static inline __u32 ceph_frag_make_child(__u32 f, int by, int i)
 {
+	/* ceph_frag_bits 提取片段编码值的高8位，表示片段的位数，加上by得到新的位数 */
 	int newbits = ceph_frag_bits(f) + by;
+	/* ceph_frag_value 提取低24位的值 */
+	/* i << (24 - newbits) 表示将i左移24 - newbits位，得到一个子节点新的值 */
+	/* ceph_frag_value(f) | (i << (24 - newbits)) 表示将新的值与ceph_frag_value(f)进行按位或操作 */
+	/* ceph_frag_make 将新的位数和新的值进行组合，得到子节点的编码值 */
 	return ceph_frag_make(newbits,
 			 ceph_frag_value(f) | (i << (24 - newbits)));
 }

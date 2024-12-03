@@ -2318,6 +2318,7 @@ void MDCache::predirty_journal_parents(MutationRef mut, EMetaBlob *blob,
       // if mtime or linkunlink changed, just increment change_attr
       //if (touched_chattr)
       pi.inode->change_attr++;
+      pi.inode->dirstat.change_attr = pi.inode->change_attr;
       
       dout(1) << "predirty_journal_parents     gives " << pi.inode->dirstat << " on " << *pin << dendl;
 

@@ -2502,11 +2502,11 @@ void CInode::finish_scatter_gather_update(int type, MutationRef& mut)
 	}
 
 	if (pf->accounted_fragstat.version == pi->dirstat.version - 1) {
-	  dout(20) << fg << "           fragstat " << pf->fragstat << dendl;
-	  dout(20) << fg << " accounted_fragstat " << pf->accounted_fragstat << dendl;
+	  dout(1) << fg << "           fragstat " << pf->fragstat << dendl;
+	  dout(1) << fg << " accounted_fragstat " << pf->accounted_fragstat << dendl;
 	  pi->dirstat.add_delta(pf->fragstat, pf->accounted_fragstat, &touched_mtime, &touched_chattr);
 	} else {
-	  dout(20) << fg << " skipping STALE accounted_fragstat " << pf->accounted_fragstat << dendl;
+	  dout(1) << fg << " skipping STALE accounted_fragstat " << pf->accounted_fragstat << dendl;
 	}
 
 	if (pf->fragstat.nfiles < 0 ||
@@ -2527,7 +2527,7 @@ void CInode::finish_scatter_gather_update(int type, MutationRef& mut)
 	  _pf->accounted_fragstat = _pf->fragstat;
 	  _pf->fragstat.version = _pf->accounted_fragstat.version = pi->dirstat.version;
 	  _pf->version = dir->pre_dirty();
-	  dout(10) << fg << " updated accounted_fragstat " << pf->fragstat << " on " << *dir << dendl;
+	  dout(1) << fg << " updated accounted_fragstat " << pf->fragstat << " on " << *dir << dendl;
 	}
 
 	tmpdft.force_to_leaf(g_ceph_context, fg);
@@ -2538,13 +2538,9 @@ void CInode::finish_scatter_gather_update(int type, MutationRef& mut)
       //if (touched_chattr)
       //  pi->change_attr++;
       if (pi->change_attr < dirstat.change_attr) {
-        dout(1) << "1  change_attr " << pi->change_attr << " -> " << dirstat.change_attr << dendl;
+        dout(1) << "pi->change_attr " << pi->change_attr << " -> " << dirstat.change_attr << dendl;
+        dout(1) << "pi->dirstat.change_attr " << pi->dirstat.change_attr << " -> " << dirstat.change_attr << dendl;
         pi->change_attr = pi->dirstat.change_attr = dirstat.change_attr;
-      }
-
-      if (pi->dirstat.change_attr < pi->change_attr) {
-        dout(1) << "2  change_attr " << pi->change_attr << " -> " << pi->dirstat.change_attr << dendl;
-        pi->dirstat.change_attr = pi->change_attr;
       }
 
       dout(1) << " final dirstat " << pi->dirstat << " pi->change_attr " << pi->change_attr << dendl;
